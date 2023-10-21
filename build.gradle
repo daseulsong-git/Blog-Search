@@ -24,6 +24,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+	implementation 'org.json:json:20160810'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
