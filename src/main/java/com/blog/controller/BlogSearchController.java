@@ -41,9 +41,12 @@ public class BlogSearchController {
         List<RankResponse> result = new ArrayList<>();
 
         RankResponse tempRank = null;
+
         for(Rank r : ranks){
+            tempRank = new RankResponse();
             tempRank.setKeyword(r.getKeyword());
             tempRank.setCount(r.getCount());
+            result.add(tempRank);
         }
         return result;
     }

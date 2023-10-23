@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface RankRepository extends JpaRepository<Rank, String> {
 
-    @Query(nativeQuery = true, value = "select * from Post ORDER BY count desc LIMIT 10")
+    @Query(nativeQuery = true, value = "SELECT KEYWORD, COUNT FROM RANK ORDER BY COUNT DESC")
     List<Rank> getRank();
 
     @Transactional

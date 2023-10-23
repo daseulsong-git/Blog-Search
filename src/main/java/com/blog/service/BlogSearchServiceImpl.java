@@ -77,17 +77,16 @@ public class BlogSearchServiceImpl implements BlogSearchService{
                 return postList;
             }
 
-            // add Keyword Count
-            if(keywordCheck(keyword)){
-                rankRepository.addCountOfKeyword(keyword);
-            }else{
-                rankRepository.save(new Rank(keyword,0));
-            }
-
         } catch (InterruptedException e) {
             e.printStackTrace();
             throw new InterruptedException();
         } finally {
+            // add Keyword Count
+            if(keywordCheck(keyword)){
+                rankRepository.addCountOfKeyword(keyword);
+            }else{
+                rankRepository.save(new Rank(keyword,1));
+            }
             rLock.unlock();
         }
         return null;
