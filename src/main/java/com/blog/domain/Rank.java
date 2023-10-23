@@ -1,16 +1,20 @@
 package com.blog.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.RequiredArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 @Data
-@AllArgsConstructor
-public class Rank {
+@RequiredArgsConstructor
+public class Rank{
     @Id
     private String keyword;
     private Integer count;
+
+    public Rank(String keyword, int i) {
+        this.keyword = keyword;
+        this.count = i;
+    }
 }

@@ -1,7 +1,6 @@
 package com.blog.service;
 
 import com.blog.convert.JsonConverter;
-import com.blog.domain.Post;
 import com.blog.domain.Rank;
 import com.blog.dto.BlogSearchResponse;
 import com.blog.persistence.RankRepository;
@@ -23,9 +22,8 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class BlogSearchServiceImpl implements BlogSearchService{
@@ -80,6 +78,12 @@ public class BlogSearchServiceImpl implements BlogSearchService{
             }
 
             // add Keyword Count
+            if(keywordCheck(keyword)){
+                rankRepository.addCountOfKeyword(keyword);
+            }else{
+                rankRepository.save(new Rank(keyword,0));
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
             throw new InterruptedException();
@@ -89,6 +93,14 @@ public class BlogSearchServiceImpl implements BlogSearchService{
         return null;
     }
 
+    public boolean keywordCheck(String keyword){
+        Optional<Rank> chkRank = rankRepository.findById(keyword);
+        if(chkRank.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public List<Rank> getRank() {
         List<Rank> ranks = rankRepository.getRank();
         return ranks;

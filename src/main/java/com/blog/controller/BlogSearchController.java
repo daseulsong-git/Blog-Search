@@ -1,21 +1,18 @@
 package com.blog.controller;
 
-import com.blog.domain.Post;
+import com.blog.domain.Rank;
 import com.blog.dto.BlogSearchResponse;
 import com.blog.dto.RankResponse;
 import com.blog.service.BlogSearchService;
+import com.blog.service.RankService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +20,9 @@ public class BlogSearchController {
 
     @Autowired
     private BlogSearchService blogSearchService;
+
+    @Autowired
+    private RankService rankService;
 
     // Keyword Search
     @GetMapping("api/blog/{keyword}/{page}")
@@ -35,8 +35,16 @@ public class BlogSearchController {
 
     // Rank of Keyword
     @GetMapping("api/blog/rank")
-    public List<RankResponse> getRank (){
+    public List<RankResponse> getRank(){
 
-        return null;
+        List<Rank> ranks = rankService.getRank();
+        List<RankResponse> result = new ArrayList<>();
+
+        RankResponse tempRank = null;
+        for(Rank r : ranks){
+            tempRank.setKeyword(r.getKeyword());
+            tempRank.setCount(r.getCount());
+        }
+        return result;
     }
 }

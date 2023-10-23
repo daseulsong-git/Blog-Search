@@ -8,6 +8,5 @@ import lombok.Data;
 public class RankResponse {
     private String keyword;
     private Integer count;
-
 }
 
