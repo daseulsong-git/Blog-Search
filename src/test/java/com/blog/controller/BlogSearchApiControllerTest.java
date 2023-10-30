@@ -1,11 +1,9 @@
 package com.blog.controller;
 
 import com.blog.domain.Rank;
-import com.blog.service.BlogSearchService;
-import com.blog.service.RankService;
+import com.blog.api.service.BlogSearchApiService;
+import com.blog.api.service.RankApiService;
 import com.google.gson.Gson;
-import jdk.jfr.Name;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +27,10 @@ class BlogSearchApiControllerTest {
     WebApplicationContext webApplicationContext;
 
     @MockBean
-    private BlogSearchService blogSearchService;
+    private BlogSearchApiService blogSearchApiService;
 
     @MockBean
-    private RankService rankService;
+    private RankApiService rankApiService;
 
     @MockBean
     private Rank rank;
@@ -61,7 +59,7 @@ class BlogSearchApiControllerTest {
         Gson gson = new Gson();
         String jsonResult = gson.toJson(result);
 
-        when(rankService.getRank()).thenReturn(result);
+        when(rankApiService.getRank()).thenReturn(result);
 
         // HTTP(http://localhost:8080/api/blog/rank) 요청 전송
         mockMvc.perform(MockMvcRequestBuilders.get("/api/blog/rank"))

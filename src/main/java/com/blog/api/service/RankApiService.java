@@ -1,10 +1,9 @@
-package com.blog.service;
+package com.blog.api.service;
 
 import com.blog.domain.Rank;
-
 import java.util.List;
 
-public interface RankService {
+public interface RankApiService {
     List<Rank> getRank();
 
     void addCountOfKeyword(String keyword);

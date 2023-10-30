@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>블로그 검색 서비스</title>
+    <title>Blog Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,28 +67,26 @@
     <div class="search-results">
         <table>
             <thead>
-            <tr>
-                <th>항목 1</th>
-                <th>항목 2</th>
-                <th>항목 3</th>
-            </tr>
+                <tr>
+                    <th>No</th>
+                    <th>Blog Name</th>
+                    <th>Content</th>
+                    <th>Url</th>
+                    <th>Content</th>
+                    <th>Thumbnail</th>
+                    <th>DateTime</th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>내용 1-1</td>
-                <td>내용 1-2</td>
-                <td>내용 1-3</td>
-            </tr>
-            <tr>
-                <td>내용 2-1</td>
-                <td>내용 2-2</td>
-                <td>내용 2-3</td>
-            </tr>
-            <tr>
-                <td>내용 3-1</td>
-                <td>내용 3-2</td>
-                <td>내용 3-3</td>
-            </tr>
+                <tr th:each="board, state : ${boardList}">
+                    <td th:text="${state.count}"/>
+                    <td><a th:href="@{/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
+                    <td th:text="${board.writer}"/>
+                    <td th:text="${#dates.format(board.regDate, 'yyyy-MM-dd')}"/>
+                    <td th:text="${board.cnt}"/>
+                    <td th:text="${board.cnt}"/>
+                    <td th:text="${board.cnt}"/>
+                </tr>
             </tbody>
         </table>
     </div>

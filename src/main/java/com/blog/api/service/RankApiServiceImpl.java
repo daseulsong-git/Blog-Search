@@ -1,26 +1,26 @@
-package com.blog.service;
+package com.blog.api.service;
 
 import com.blog.domain.Rank;
-import com.blog.persistence.RankRepository;
+import com.blog.api.persistence.RankApiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RankServiceImpl implements RankService {
+public class RankApiServiceImpl implements RankApiService {
 
     @Autowired
-    private RankRepository rankRepository;
+    private RankApiRepository rankApiRepository;
 
     @Override
     public List<Rank> getRank() {
-        return rankRepository.getRank();
+        return rankApiRepository.getRank();
     }
 
     @Override
     public void addCountOfKeyword(String keyword) {
-        rankRepository.addCountOfKeyword(keyword);
+        rankApiRepository.addCountOfKeyword(keyword);
     }
 
 

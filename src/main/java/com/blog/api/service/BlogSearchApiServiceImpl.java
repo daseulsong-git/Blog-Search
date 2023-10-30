@@ -1,9 +1,9 @@
-package com.blog.service;
+package com.blog.api.service;
 
-import com.blog.api.dto.BlogSearchResponse;
 import com.blog.convert.JsonConverter;
 import com.blog.domain.Rank;
-import com.blog.persistence.RankRepository;
+import com.blog.api.dto.BlogSearchResponse;
+import com.blog.api.persistence.RankApiRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,6 +15,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
+
 import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class BlogSearchServiceImpl implements BlogSearchService {
+public class BlogSearchApiServiceImpl implements BlogSearchApiService {
 
     @Autowired
-    private RankRepository rankRepository;
+    private RankApiRepository rankApiRepository;
     @Autowired
     private JsonConverter jsonConverter;
     @Autowired
@@ -80,9 +81,9 @@ public class BlogSearchServiceImpl implements BlogSearchService {
         } finally {
             // add Keyword Count
             if(keywordCheck(keyword)){
-                rankRepository.addCountOfKeyword(keyword);
+                rankApiRepository.addCountOfKeyword(keyword);
             }else{
-                rankRepository.save(new Rank(keyword,1));
+                rankApiRepository.save(new Rank(keyword,1));
             }
             rLock.unlock();
         }
@@ -94,7 +95,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     }
 
     public boolean keywordCheck(String keyword){
-        Optional<Rank> chkRank = rankRepository.findById(keyword);
+        Optional<Rank> chkRank = rankApiRepository.findById(keyword);
         if(chkRank.isPresent()){
             return true;
         }else{
@@ -102,7 +103,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
         }
     }
     public List<Rank> getRank() {
-        List<Rank> ranks = rankRepository.getRank();
+        List<Rank> ranks = rankApiRepository.getRank();
         return ranks;
     }
 }

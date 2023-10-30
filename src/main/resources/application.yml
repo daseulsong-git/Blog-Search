@@ -20,7 +20,9 @@ spring:
     console:
       enabled: true
       path: /h2-console
-
+  devtools:
+    restart:
+      enabled: true
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace

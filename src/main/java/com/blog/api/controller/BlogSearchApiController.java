@@ -1,10 +1,10 @@
-package com.blog.api;
+package com.blog.api.controller;
 
 import com.blog.domain.Rank;
-import com.blog.dto.BlogSearchResponse;
-import com.blog.dto.RankResponse;
-import com.blog.service.BlogSearchService;
-import com.blog.service.RankService;
+import com.blog.api.dto.BlogSearchResponse;
+import com.blog.api.dto.RankResponse;
+import com.blog.api.service.BlogSearchApiService;
+import com.blog.api.service.RankApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +19,17 @@ import java.util.List;
 public class BlogSearchApiController {
 
     @Autowired
-    private BlogSearchService blogSearchService;
+    private BlogSearchApiService blogSearchApiService;
 
     @Autowired
-    private RankService rankService;
+    private RankApiService rankApiService;
 
     // Keyword Search
     @GetMapping("api/blog/{keyword}/{page}")
     public List<BlogSearchResponse> blogSearch (@PathVariable("keyword") String keyword,
                                                 @PathVariable("page") Integer page) throws Exception {
 
-        List<BlogSearchResponse> result = blogSearchService.blogSearch(keyword, page);
+        List<BlogSearchResponse> result = blogSearchApiService.blogSearch(keyword, page);
         return result;
     }
 
@@ -37,7 +37,7 @@ public class BlogSearchApiController {
     @GetMapping("api/blog/rank")
     public List<RankResponse> getRank(){
 
-        List<Rank> ranks = rankService.getRank();
+        List<Rank> ranks = rankApiService.getRank();
         List<RankResponse> result = new ArrayList<>();
 
         RankResponse tempRank = null;

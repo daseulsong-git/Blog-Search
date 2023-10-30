@@ -1,4 +1,4 @@
-package com.blog.dto;
+package com.blog.api.dto;
 
 import com.blog.convert.JsonConverter;
 import lombok.AllArgsConstructor;

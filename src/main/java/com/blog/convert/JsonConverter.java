@@ -1,6 +1,6 @@
 package com.blog.convert;
 
-import com.blog.dto.BlogSearchResponse;
+import com.blog.api.dto.BlogSearchResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import javax.persistence.AttributeConverter;

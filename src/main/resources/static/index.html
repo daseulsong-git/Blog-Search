@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daseul Blog Search Service</title>
+    <title>Blog Search Service</title>
     <style>
+        .section {
+            margin-bottom: 20px;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -28,14 +31,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #e18c0e;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
         p {
             font-size: 18px;
             margin: 20px 0;
@@ -45,15 +40,27 @@
             color: #fff;
             padding: 10px;
         }
+        .btn {
+            background-color: #eaa857;
+            color: #fff;
+            padding: 20px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 <header>
     <h1>Blog Search Service</h1>
 </header>
-<div class="container">
-    <button id="blogSearch">Search</button>
-    <button id="rank">Rank</button>
-</div>
+    <div class="container">
+        <a href="blogSearchView" class="btn">Search</a>
+        <a href="rank" class="btn">Rank</a>
+    </div>
 </body>
 </html>
