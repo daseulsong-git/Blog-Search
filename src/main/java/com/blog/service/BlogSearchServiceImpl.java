@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
@@ -37,7 +38,7 @@ public class BlogSearchServiceImpl implements BlogSearchService{
     @Value("${apiKey}")
     private String apiKey;
 
-    public List<BlogSearchResponse> blogSearch(String keyword, Integer page) throws UnsupportedEncodingException, URISyntaxException, ParseException, InterruptedException {
+    public List<BlogSearchResponse> blogSearch(String keyword, Integer page) throws Exception {
         RLock rLock = redissonClient.getLock("RedissonLock");
 
         try {
@@ -77,9 +78,9 @@ public class BlogSearchServiceImpl implements BlogSearchService{
                 return postList;
             }
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new InterruptedException();
+            throw new Exception("조회 오류 발생 !!!");
         } finally {
             // add Keyword Count
             if(keywordCheck(keyword)){
@@ -89,6 +90,10 @@ public class BlogSearchServiceImpl implements BlogSearchService{
             }
             rLock.unlock();
         }
+        return null;
+    }
+
+    public List<BlogSearchResponse> blogSearch(String keyword, Integer page, Model model) throws Exception {
         return null;
     }
 
