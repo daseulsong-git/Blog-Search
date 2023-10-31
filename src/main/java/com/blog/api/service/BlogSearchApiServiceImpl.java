@@ -1,6 +1,6 @@
 package com.blog.api.service;
 
-import com.blog.convert.JsonConverter;
+import com.blog.api.convert.JsonApiConverter;
 import com.blog.domain.Rank;
 import com.blog.api.dto.BlogSearchResponse;
 import com.blog.api.persistence.RankApiRepository;
@@ -29,7 +29,7 @@ public class BlogSearchApiServiceImpl implements BlogSearchApiService {
     @Autowired
     private RankApiRepository rankApiRepository;
     @Autowired
-    private JsonConverter jsonConverter;
+    private JsonApiConverter jsonApiConverter;
     @Autowired
     private RedissonClient redissonClient;
     @Value("${apiKey}")
@@ -69,7 +69,7 @@ public class BlogSearchApiServiceImpl implements BlogSearchApiService {
                 List<BlogSearchResponse> postList = new ArrayList<>();
 
                 for(int i=0; i<docu.size(); i++){
-                    post = jsonConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
+                    post = jsonApiConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
                     postList.add(post);
                 }
                 return postList;

@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface BlogSearchApiService {
     List<BlogSearchResponse> blogSearch(String keyword, Integer page) throws Exception;
-    List<BlogSearchResponse> blogSearch(String keyword, Integer page, Model model) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.blog.service;
 
 import com.blog.api.dto.BlogSearchResponse;
 import com.blog.convert.JsonConverter;
+import com.blog.domain.Blog;
 import com.blog.domain.Rank;
 import com.blog.persistence.RankRepository;
 import org.json.simple.JSONArray;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class BlogSearchServiceImpl implements BlogSearchService {
-
     @Autowired
     private RankRepository rankRepository;
     @Autowired
@@ -34,7 +33,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     @Value("${apiKey}")
     private String apiKey;
 
-    public List<BlogSearchResponse> blogSearch(String keyword, Integer page) throws Exception {
+    public List<Blog> blogSearch(String keyword, Integer page) throws Exception {
         RLock rLock = redissonClient.getLock("RedissonLock");
 
         try {
@@ -63,9 +62,10 @@ public class BlogSearchServiceImpl implements BlogSearchService {
             JSONObject body = (JSONObject) jsonParser.parse(res.getBody().toString());
             JSONArray docu = (JSONArray) body.get("documents");
 
+            System.out.println(docu);
             if(docu.size() != 0){
-                BlogSearchResponse post = new BlogSearchResponse();
-                List<BlogSearchResponse> postList = new ArrayList<>();
+                Blog post;
+                List<Blog> postList = new ArrayList<>();
 
                 for(int i=0; i<docu.size(); i++){
                     post = jsonConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
@@ -73,8 +73,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
                 }
                 return postList;
             }
-
-        } catch (Exception e) {
+        }catch(Exception e) {
             e.printStackTrace();
             throw new Exception("조회 오류 발생 !!!");
         } finally {
@@ -86,10 +85,6 @@ public class BlogSearchServiceImpl implements BlogSearchService {
             }
             rLock.unlock();
         }
-        return null;
-    }
-
-    public List<BlogSearchResponse> blogSearch(String keyword, Integer page, Model model) throws Exception {
         return null;
     }
 

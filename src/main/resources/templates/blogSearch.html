@@ -60,8 +60,10 @@
 <body>
 <div class="container">
     <h1>블로그 검색</h1>
-    <form class="search-form">
-        <input type="text" class="search-input" placeholder="검색어를 입력하세요">
+    <form action="blogSearch" method="post">
+        <input type="text" class="search-input" name="keyword" placeholder="검색어를 입력하세요">
+        <input type="hidden" name="page" value="2">
+
         <button class="search-button" type="submit">검색</button>
     </form>
     <div class="search-results">
@@ -70,7 +72,6 @@
                 <tr>
                     <th>No</th>
                     <th>Blog Name</th>
-                    <th>Content</th>
                     <th>Url</th>
                     <th>Content</th>
                     <th>Thumbnail</th>
@@ -78,15 +79,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="board, state : ${boardList}">
-                    <td th:text="${state.count}"/>
-                    <td><a th:href="@{/getBoard(seq=${board.seq})}" th:text="${board.title}"></a></td>
-                    <td th:text="${board.writer}"/>
-                    <td th:text="${#dates.format(board.regDate, 'yyyy-MM-dd')}"/>
-                    <td th:text="${board.cnt}"/>
-                    <td th:text="${board.cnt}"/>
-                    <td th:text="${board.cnt}"/>
-                </tr>
+<!--                <tr th:each="blog, state : ${blogList}">-->
+<!--                    <td th:text="${state.count}"/>-->
+<!--                    <td th:text="${blog.blogname}"/>-->
+<!--                    <td th:text="${blog.url}"/>-->
+<!--                    <td th:text="${blog.contents}"/>-->
+<!--                    <td th:text="${blog.thumbnail}"/>-->
+<!--                    <td th:text="${#dates.format(blog.datetime, 'yyyy-MM-dd')}"/>-->
+<!--                </tr>-->
             </tbody>
         </table>
     </div>
