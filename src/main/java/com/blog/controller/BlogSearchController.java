@@ -5,12 +5,10 @@ import com.blog.api.dto.RankResponse;
 import com.blog.service.BlogSearchService;
 import com.blog.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +42,9 @@ import java.util.List;
             return "rank";
         }
 
-        @Cacheable(value = "blogs", key = "#keyword", unless = "#keyword == ''", condition = "#keyword.length > 0")
         @PostMapping("/blogSearch")
-        public String blogSearch (String keyword, Integer page, Model model) throws Exception{
-            System.out.println("keyword : "+keyword);
-            System.out.println("page : "+page);
-            model.addAttribute("blogList", blogSearchService.blogSearch(keyword, page));
+        public String blogSearch (String keyword, Integer page, String sort, Model model) throws Exception{
+            model.addAttribute("blogList", blogSearchService.blogSearch(keyword, page, sort));
             return "blogSearch";
         }
 }

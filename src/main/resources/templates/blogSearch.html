@@ -20,7 +20,7 @@
             text-align: center;
         }
         .search-input {
-            width: 80%;
+            width: 60%;
             padding: 10px;
             margin: 10px 0;
         }
@@ -55,41 +55,79 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        select {
+            width: 20%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
+<form action="blogSearch" method="post">
 <div class="container">
     <h1>블로그 검색</h1>
-    <form action="blogSearch" method="post">
-        <input type="text" class="search-input" name="keyword" placeholder="검색어를 입력하세요">
-        <input type="hidden" name="page" value="2">
-
-        <button class="search-button" type="submit">검색</button>
-    </form>
-    <div class="search-results">
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Blog Name</th>
-                    <th>Url</th>
-                    <th>Content</th>
-                    <th>Thumbnail</th>
-                    <th>DateTime</th>
-                </tr>
-            </thead>
-            <tbody>
-<!--                <tr th:each="blog, state : ${blogList}">-->
-<!--                    <td th:text="${state.count}"/>-->
-<!--                    <td th:text="${blog.blogname}"/>-->
-<!--                    <td th:text="${blog.url}"/>-->
-<!--                    <td th:text="${blog.contents}"/>-->
-<!--                    <td th:text="${blog.thumbnail}"/>-->
-<!--                    <td th:text="${#dates.format(blog.datetime, 'yyyy-MM-dd')}"/>-->
-<!--                </tr>-->
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <input type="text" class="search-input" name="keyword" th:value="${blogList != null} ? ${blogList[0].keyword}" placeholder="검색어를 입력하세요">
+            <input type="hidden" name="page" th:value="1">
+            <select name="sort">
+                <option th:value="accuracy" th:text="accuracy"
+                        th:selected="${blogList} != null and ${blogList[0].sort} == 'accuracy'"></option>
+                <option th:value="recency" th:text="recency"
+                        th:selected="${blogList} != null and ${blogList[0].sort} == 'recency'"></option>
+            </select>
+            <button class="search-button" type="submit">검색</button>
+        </div>
 </div>
+<div class="search-results">
+    <table>
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Blog Name</th>
+            <th>Content</th>
+            <th>Url</th>
+            <th>DateTime</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="blog, state : ${blogList}">
+            <td th:text="${state.count}"/>
+            <td th:text="${blog.blogname}"/>
+            <td th:text="${blog.contents}"/>
+            <td th:text="${blog.url}"/>
+            <td th:text="${#dates.format(blog.datetime, 'yyyy-MM-dd')}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div th:if="${totalPages > 1}">
+        <ul class="pagination">
+            <li th:class="${currentPage == 1} ? 'disabled' : ''">
+                <a th:if="${currentPage > 1}" th:href="@{'?page=' + (currentPage - 1)}">&laquo; Previous</a>
+                <span th:unless="${currentPage > 1}">&laquo; Previous</span>
+            </li>
+
+            <li th:each="page, iterStat : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == page} ? 'active' : ''">
+                <a th:if="${currentPage != page}" th:href="@{'?page=' + page}" th:text="${page}"></a>
+                <span th:unless="${currentPage != page}" th:text="${page}"></span>
+            </li>
+
+            <li th:class="${currentPage == totalPages} ? 'disabled' : ''">
+                <a th:if="${currentPage < totalPages}" th:href="@{'?page=' + (currentPage + 1)}">Next &raquo;</a>
+                <span th:unless="${currentPage < totalPages}">Next &raquo;</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Your content goes here -->
+    <div>
+        <!-- Display your paginated items here -->
+    </div>
+
+
+
+</form>
 </body>
 </html>

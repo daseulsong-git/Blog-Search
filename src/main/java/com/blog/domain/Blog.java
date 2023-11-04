@@ -14,4 +14,12 @@ public class Blog {
     private String blogname;
     private String thumbnail;
     private Date datetime;
+    
+    /*검색용*/
+    private String keyword;
+    private String sort;
+    private Integer pageableCount;
+    private boolean end;
+
+
 }

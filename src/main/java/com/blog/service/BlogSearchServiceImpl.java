@@ -1,6 +1,6 @@
 package com.blog.service;
 
-import com.blog.api.dto.BlogSearchResponse;
+
 import com.blog.convert.JsonConverter;
 import com.blog.domain.Blog;
 import com.blog.domain.Rank;
@@ -33,7 +33,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     @Value("${apiKey}")
     private String apiKey;
 
-    public List<Blog> blogSearch(String keyword, Integer page) throws Exception {
+    public List<Blog> blogSearch(String keyword, Integer page, String sort) throws Exception {
         RLock rLock = redissonClient.getLock("RedissonLock");
 
         try {
@@ -52,7 +52,8 @@ public class BlogSearchServiceImpl implements BlogSearchService {
 
             HttpEntity<String> entity = new HttpEntity<String>("parameters",headers);
             String encode = URLEncoder.encode(keyword,"UTF-8");
-            String rawURI = "https://dapi.kakao.com/v2/search/blog?query="+encode+"?page="+page.toString();
+            String rawURI = "https://dapi.kakao.com/v2/search/blog?query="+encode
+                    +"&size="+20+"&page="+page+"&sort="+sort;
 
             URI uri = new URI(rawURI);
 
@@ -62,13 +63,14 @@ public class BlogSearchServiceImpl implements BlogSearchService {
             JSONObject body = (JSONObject) jsonParser.parse(res.getBody().toString());
             JSONArray docu = (JSONArray) body.get("documents");
 
-            System.out.println(docu);
             if(docu.size() != 0){
                 Blog post;
                 List<Blog> postList = new ArrayList<>();
 
                 for(int i=0; i<docu.size(); i++){
                     post = jsonConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
+                    post.setKeyword(keyword);
+                    post.setSort(sort);
                     postList.add(post);
                 }
                 return postList;
