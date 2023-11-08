@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ import java.util.List;
             return "rank";
         }
 
-        @PostMapping("/blogSearch")
+        @RequestMapping("/blogSearch")
         public String blogSearch (String keyword, Integer page, String sort, Model model) throws Exception{
             model.addAttribute("blogList", blogSearchService.blogSearch(keyword, page, sort));
             return "blogSearch";

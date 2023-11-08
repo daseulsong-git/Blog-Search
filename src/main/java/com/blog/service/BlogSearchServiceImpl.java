@@ -62,15 +62,33 @@ public class BlogSearchServiceImpl implements BlogSearchService {
             JSONParser jsonParser = new JSONParser();
             JSONObject body = (JSONObject) jsonParser.parse(res.getBody().toString());
             JSONArray docu = (JSONArray) body.get("documents");
+            JSONObject meta = (JSONObject) body.get("meta");
 
             if(docu.size() != 0){
                 Blog post;
                 List<Blog> postList = new ArrayList<>();
 
+                System.out.println(meta); //{"total_count":3018284,"is_end":false,"pageable_count":800}
+
+                Integer cnt = Integer.parseInt(meta.get("pageable_count").toString());
+
+                if(cnt%20 > 1){
+                    cnt = (cnt/20)+1;
+                }else{
+                    cnt = cnt/20;
+                }
+
+                System.out.println("cnt : "+cnt);
+
                 for(int i=0; i<docu.size(); i++){
                     post = jsonConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
                     post.setKeyword(keyword);
                     post.setSort(sort);
+                    if(i==0){
+                        post.setIsEnd(meta.get("is_end").toString());
+                        post.setTotalCount(cnt);
+                        post.setCurrentPage(page);
+                    }
                     postList.add(post);
                 }
                 return postList;

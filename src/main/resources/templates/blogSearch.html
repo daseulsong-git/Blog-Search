@@ -62,6 +62,23 @@
             border: 1px solid #ccc;
             border-radius: 3px;
         }
+        .pagination {
+            display: flex;
+            list-style: none;
+        }
+        .pagination li {
+            margin: 5px;
+        }
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+        }
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -102,32 +119,25 @@
         </tbody>
     </table>
 </div>
-    <div th:if="${totalPages > 1}">
+    <!-- Pagination -->
+    <div th:if="${blogList != null}">
         <ul class="pagination">
-            <li th:class="${currentPage == 1} ? 'disabled' : ''">
-                <a th:if="${currentPage > 1}" th:href="@{'?page=' + (currentPage - 1)}">&laquo; Previous</a>
-                <span th:unless="${currentPage > 1}">&laquo; Previous</span>
+            <li><a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${blogList[0].currentPage-1},sort=${blogList[0].sort})}">&laquo;</a></li>
+            <li th:each="page : ${blogList[0].currentPage}">
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page},sort=${blogList[0].sort})}"
+                   th:text="${page}"/>
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+1},sort=${blogList[0].sort})}"
+                   th:text="${page+1}"/>
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+2},sort=${blogList[0].sort})}"
+                   th:text="${page+2}"/>
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+3},sort=${blogList[0].sort})}"
+                   th:text="${page+3}"/>
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+4},sort=${blogList[0].sort})}"
+                   th:text="${page+4}"/>
             </li>
-
-            <li th:each="page, iterStat : ${#numbers.sequence(1, totalPages)}" th:class="${currentPage == page} ? 'active' : ''">
-                <a th:if="${currentPage != page}" th:href="@{'?page=' + page}" th:text="${page}"></a>
-                <span th:unless="${currentPage != page}" th:text="${page}"></span>
-            </li>
-
-            <li th:class="${currentPage == totalPages} ? 'disabled' : ''">
-                <a th:if="${currentPage < totalPages}" th:href="@{'?page=' + (currentPage + 1)}">Next &raquo;</a>
-                <span th:unless="${currentPage < totalPages}">Next &raquo;</span>
-            </li>
+            <li><a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${blogList[0].currentPage+1},sort=${blogList[0].sort})}">&raquo;</a></li>
         </ul>
     </div>
-
-    <!-- Your content goes here -->
-    <div>
-        <!-- Display your paginated items here -->
-    </div>
-
-
-
 </form>
 </body>
 </html>

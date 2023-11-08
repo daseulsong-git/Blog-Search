@@ -18,8 +18,10 @@ public class Blog {
     /*검색용*/
     private String keyword;
     private String sort;
-    private Integer pageableCount;
-    private boolean end;
+    private Integer totalCount;
+    private String isEnd;
+
+    private Integer currentPage;
 
 
 }
