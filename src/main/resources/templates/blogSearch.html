@@ -88,6 +88,7 @@
         <div>
             <input type="text" class="search-input" name="keyword" th:value="${blogList != null} ? ${blogList[0].keyword}" placeholder="검색어를 입력하세요">
             <input type="hidden" name="page" th:value="1">
+            <input type="hidden" name="searchYn" th:value="Y">
             <select name="sort">
                 <option th:value="accuracy" th:text="accuracy"
                         th:selected="${blogList} != null and ${blogList[0].sort} == 'accuracy'"></option>
@@ -98,6 +99,7 @@
         </div>
 </div>
 <div class="search-results">
+    <a href="index.html" style="position:fixed;top:0;left:0;margin:10px;text-decoration:none">Go to Home</a>
     <table>
         <thead>
         <tr>
@@ -124,15 +126,15 @@
         <ul class="pagination">
             <li><a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${blogList[0].currentPage-1},sort=${blogList[0].sort})}">&laquo;</a></li>
             <li th:each="page : ${blogList[0].currentPage}">
-                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page},sort=${blogList[0].sort})}"
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page},sort=${blogList[0].sort},searchYn=N)}"
                    th:text="${page}"/>
-                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+1},sort=${blogList[0].sort})}"
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+1},sort=${blogList[0].sort},searchYn=N)}"
                    th:text="${page+1}"/>
-                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+2},sort=${blogList[0].sort})}"
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+2},sort=${blogList[0].sort},searchYn=N)}"
                    th:text="${page+2}"/>
-                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+3},sort=${blogList[0].sort})}"
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+3},sort=${blogList[0].sort},searchYn=N)}"
                    th:text="${page+3}"/>
-                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+4},sort=${blogList[0].sort})}"
+                <a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${page+4},sort=${blogList[0].sort},searchYn=N)}"
                    th:text="${page+4}"/>
             </li>
             <li><a th:href="@{/blogSearch(keyword=${blogList[0].keyword},page=${blogList[0].currentPage+1},sort=${blogList[0].sort})}">&raquo;</a></li>

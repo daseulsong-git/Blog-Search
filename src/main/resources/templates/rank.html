@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Rank</title>
+    <style>
+        a {
+          position: fixed;
+          top: 0;
+          left: 0;
+          margin: 10px;
+          text-decoration: none;
+        }
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f4;
+          text-align: center;
+          margin: 30px;
+        }
+
+        h1 {
+          color: #333;
+        }
+
+        table {
+          width: 80%;
+          margin: 20px auto;
+          border-collapse: collapse;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+          border: 1px solid #ddd;
+          padding: 15px;
+          text-align: center;
+        }
+
+        th {
+          background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-
+    <a href="index.html">Go to Home</a>
+    <h1>검색어 순위</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Keyword</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rank, index : ${rankList}">
+            <td th:text="${index.index + 1}"></td>
+            <td th:text="${rank.keyword}"></td>
+            <td th:text="${rank.count}"></td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>

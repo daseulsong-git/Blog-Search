@@ -28,25 +28,14 @@ import java.util.List;
         }
 
         @GetMapping("/rank")
-        public String getRank(){
-
-            List<Rank> ranks = rankService.getRank();
-            List<RankResponse> result = new ArrayList<>();
-
-            RankResponse tempRank;
-
-            for(Rank r : ranks){
-                tempRank = new RankResponse();
-                tempRank.setKeyword(r.getKeyword());
-                tempRank.setCount(r.getCount());
-                result.add(tempRank);
-            }
+        public String getRank(Model model){
+            model.addAttribute("rankList", rankService.getRank());
             return "rank";
         }
 
         @RequestMapping("/blogSearch")
-        public String blogSearch (String keyword, Integer page, String sort, Model model) throws Exception{
-            model.addAttribute("blogList", blogSearchService.blogSearch(keyword, page, sort));
+        public String blogSearch (String keyword, Integer page, String sort, String searchYn, Model model) throws Exception{
+            model.addAttribute("blogList", blogSearchService.blogSearch(keyword, page, sort, searchYn));
             return "blogSearch";
         }
 }

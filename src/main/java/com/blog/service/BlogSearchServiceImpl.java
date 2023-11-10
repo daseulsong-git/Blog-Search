@@ -33,7 +33,7 @@ public class BlogSearchServiceImpl implements BlogSearchService {
     @Value("${apiKey}")
     private String apiKey;
 
-    public List<Blog> blogSearch(String keyword, Integer page, String sort) throws Exception {
+    public List<Blog> blogSearch(String keyword, Integer page, String sort, String searchYn) throws Exception {
         RLock rLock = redissonClient.getLock("RedissonLock");
 
         try {
@@ -78,8 +78,6 @@ public class BlogSearchServiceImpl implements BlogSearchService {
                     cnt = cnt/20;
                 }
 
-                System.out.println("cnt : "+cnt);
-
                 for(int i=0; i<docu.size(); i++){
                     post = jsonConverter.convertToEntityAttribute(String.valueOf(docu.get(i)));
                     post.setKeyword(keyword);
@@ -97,11 +95,14 @@ public class BlogSearchServiceImpl implements BlogSearchService {
             e.printStackTrace();
             throw new Exception("조회 오류 발생 !!!");
         } finally {
+
             // add Keyword Count
-            if(keywordCheck(keyword)){
-                rankRepository.addCountOfKeyword(keyword);
-            }else{
-                rankRepository.save(new Rank(keyword,1));
+            if(searchYn.equals("Y")){
+                if(keywordCheck(keyword)){
+                    rankRepository.addCountOfKeyword(keyword);
+                }else{
+                    rankRepository.save(new Rank(keyword,1));
+                }
             }
             rLock.unlock();
         }

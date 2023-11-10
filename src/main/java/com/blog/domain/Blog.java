@@ -20,8 +20,6 @@ public class Blog {
     private String sort;
     private Integer totalCount;
     private String isEnd;
-
     private Integer currentPage;
-
-
+    private String searchYn;
 }
