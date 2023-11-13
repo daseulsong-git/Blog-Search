@@ -1,6 +1,6 @@
 # Blog Search Service
 
-This is a Search Service for blog. It uses a Kakao Open API.
+This is a Search Service for blog. It is used with Kakao Open API.
 
 플젝 관련 정리 내용 (https://www.notion.so/ing-8a52b2e780fe41d7a223876af46b285d)
 .. 추후 README 추가 예정
@@ -18,8 +18,10 @@ To run the Spring Boot Project, follow these simple steps :
 - H2 
 
 ### Installation
-1. Clone the repository: ```bash git clone https://github.com/your-username/awesome-spring-boot-project.git cd awesome-spring-boot-project ``` 
-2. Build the project using Maven: ```bash mvn clean install ```
+1. Clone the repository: ```bash git clone https://github.com/daseulsong-git/Blog-Search.git```
+2. Move to the Project Directory : ```cd awesome-spring-boot-project ``` 
+3. Build the project using Gradle: ```./gradlew build ```
+4. Execute the Application : ```./gradlew run```
 
 ## Technologies Used
 
