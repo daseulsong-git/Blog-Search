@@ -1,5 +1,7 @@
 package com.blog.controller;
 
+import com.blog.api.controller.BlogSearchApiController;
+import com.blog.api.service.RankApiServiceImpl;
 import com.blog.domain.Rank;
 import com.blog.api.service.BlogSearchApiService;
 import com.blog.api.service.RankApiService;
@@ -19,26 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.when;
 
-@WebMvcTest
+@WebMvcTest(BlogSearchApiController.class)
 class BlogSearchApiControllerTest {
 
     MockMvc mockMvc;
     @Autowired
     WebApplicationContext webApplicationContext;
+    @MockBean
+    private RankApiService rankApiService;
 
     @MockBean
     private BlogSearchApiService blogSearchApiService;
 
     @MockBean
-    private RankApiService rankApiService;
-
-    @MockBean
     private Rank rank;
-
-   // @Test
-    void blogSearch() {
-
-    }
 
     @BeforeEach
     public void setup() {
