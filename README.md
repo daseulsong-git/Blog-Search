@@ -9,28 +9,31 @@ This is a Search Service for blog. It is used with Kakao Open API.
 1) Search blogs with sorting(accuracy, recency). It shows 20 rows in one page.
 2) View top 10 of keywords that you seasrched.
 
-## Installation and Usage
+## Prerequisites and Execution
 
-To run the Spring Boot Project, follow these simple steps :
+To run the Spring Boot Project, follow these steps :
 
 ### Prerequisites
-- JDK 11
-- H2 
+- spring boot 2.4.1
+- Java 11
+- Redis 2.4.3
+- lombok (compileOnly)
+- gradle 7.6
 
-### Installation
+### Build and Run
 1. Clone the repository: ```bash git clone https://github.com/daseulsong-git/Blog-Search.git```
-2. Move to the Project Directory : ```cd awesome-spring-boot-project ``` 
+2. Navigate to the Project Directory : ```cd Blog-Search``` 
 3. Build the project using Gradle: ```./gradlew build ```
-4. Execute the Application : ```./gradlew run```
+4. Run the Application : ```./gradlew bootRun```
+
+▶ Execution using JAR file
+1. Download   [Blog-Search-0.0.1-SNAPSHOT.jar](https://github.com/daseulsong-git/Blog-Search/blob/master/Blog-Search-0.0.1-SNAPSHOT.jar)
+2. Execute the JAR File : ``java -jar Blog-Search-0.0.1-SNAPSHOT.jar```
 
 ## Technologies Used
 
- - Spring Boot, JPA, H2(Embedded), Redisson, lombok, Thymleaf ...
+ - Gradle 7.6, Spring Boot 2.4.1, JPA, H2(Embedded), Redis 2.4.3, lombok, Thymleaf ...
 
 ## Issues
 
-You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
-
 ## Execution
-You can delete the current file by clicking the **Remove** button in the file explorer. The file will be moved into the **Trash** folder and automatically deleted after 7 days of inactivity.
-
